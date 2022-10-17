@@ -19,12 +19,7 @@ fn fmt_to_buf(mut i: usize, buf: &mut [u8; 20]) -> &[u8] {
 fn find_md5<F: FnMut(u8, u8) -> bool>(input: &[u8], mut f: F) {
     use md5::{Digest, Md5};
 
-    let base_hasher = {
-        let mut hasher = Md5::new();
-        hasher.update(input);
-        hasher
-    };
-
+    let base_hasher = Md5::new_with_prefix(input);
     let mut idx = 0;
 
     loop {
